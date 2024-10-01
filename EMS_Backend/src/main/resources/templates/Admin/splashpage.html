@@ -1,0 +1,139 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Employee Management System</title>
+    <!-- Import Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap" rel="stylesheet">
+    <style>
+        /* Basic Styling for Splash Screen */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+          /*  background: linear-gradient(135deg, #0072ff, #00c6ff);   Gradient Background */
+          background: linear-gradient(140deg, rgb(46, 91, 239), rgb(63, 182, 247));
+            font-family: 'Roboto', sans-serif;
+            overflow: hidden;
+        }
+
+        .splash-screen {
+            text-align: center;
+            color: #FFFFFF;  /* White Text */
+            position: relative;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        .typing-text {
+            font-size: 2.5rem;  /* Larger Text Size */
+            margin-bottom: 20px;
+            animation: text-fade 1s ease-in-out;
+        }
+
+        /* Arrow Styling */
+        .arrow {
+            opacity: 0;  /* Hidden initially */
+            transition: opacity 0.5s ease-in-out;
+        }
+
+        .arrow-up {
+            font-size: 4rem;
+            color: #FFD700;  /* Gold Arrow */
+            animation: fadeIn 1s ease-in-out;  /* Fade-in animation */
+        }
+
+        /* Typing effect */
+        #welcome-message::after {
+            content: '|';
+            animation: blink 0.75s step-end infinite;
+        }
+
+        @keyframes blink {
+            0%, 50% {
+                opacity: 1;
+            }
+            50%, 100% {
+                opacity: 0;
+            }
+        }
+
+        /* Fade-in effect for the splash screen */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Fade-in effect for the arrow */
+        @keyframes arrowFadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Animation for the upward slide */
+        .slide-up {
+            transform: translateY(-100vh);
+        }
+
+        /* Arrow for upward direction after timeout */
+        .up-arrow {
+            font-size: 4rem;
+            color: #FFD700;  /* Bright Yellow */
+        }
+    </style>
+</head>
+<body>
+
+<div class="splash-screen" id="splash-screen">
+    <div class="typing-text">
+        <span id="welcome-message"></span>
+    </div>
+    <div class="arrow" id="arrow">
+        <span>&#x2193;</span> <!-- Initially down arrow -->
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const text = "Welcome to Employee Management System..!";  // Updated typing text
+        const typingSpeed = 100;  // Adjust typing speed here (milliseconds per character)
+        const redirectDelay = 8000;  // Delay before moving the screen up (milliseconds)
+        const homePage = "loginpage.html";  // Set your homepage URL here
+
+        let i = 0;
+
+        function typeEffect() {
+            if (i < text.length) {
+                document.getElementById("welcome-message").innerHTML += text.charAt(i);
+                i++;
+                setTimeout(typeEffect, typingSpeed);
+            }
+        }
+
+        // Start typing effect
+        typeEffect();
+
+        // After typing effect and delay, start moving the screen up
+        setTimeout(() => {
+            // Change arrow to up direction and move splash screen up
+            document.getElementById("arrow").innerHTML = "&#x2191;";  // Change arrow to up direction
+            document.getElementById("arrow").classList.add('arrow-up');  // Add class for upward arrow
+            document.getElementById("arrow").style.opacity = 1;  // Fade in the arrow
+            document.getElementById("splash-screen").classList.add('slide-up');  // Add slide-up class to move screen
+
+            // Redirect to homepage after the upward animation completes (1 second for animation)
+            setTimeout(() => {
+                window.location.href = homePage;
+            }, 1000);  // Animation duration should match CSS (1s)
+
+        }, redirectDelay);  // Trigger upward move after 5000 ms
+
+    });
+</script>
+
+</body>
+</html>
